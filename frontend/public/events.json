@@ -1,0 +1,7 @@
+[
+  {"title":"Design Meetup","date":"2025-11-21","link":"https://example.com/meetup"},
+  {"title":"Street Photo Walk","date":"2025-11-28","link":"https://example.com/walk"},
+  { "title": "JS Conf Online",      "date": "2025-12-10", "link": "https://confs.tech/javascript" },
+  { "title": "Writers’ Room Live",  "date": "2025-12-18", "link": "https://discord.com/" },
+  { "title": "React Meetup",        "date": "2026-01-09", "link": "https://www.meetup.com/topics/react/" }
+]

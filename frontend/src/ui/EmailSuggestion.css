@@ -1,0 +1,20 @@
+.email-suggest-box {
+  position: relative;
+  margin-top: 4px;
+  width: 100%;
+  background: var(--bg, #111);
+  border: 1px solid var(--border, #333);
+  border-radius: 6px;
+  padding: 4px 0;
+  z-index: 10;
+}
+
+.email-suggest-item {
+  padding: 8px 12px;
+  cursor: pointer;
+  color: var(--text-primary, #fff);
+}
+
+.email-suggest-item:hover {
+  background: rgba(255,255,255,0.08);
+}

@@ -1,0 +1,764 @@
+/* src/styles/settings.css */
+
+.settings-page {
+  max-width: 1120px;
+  margin: 32px auto 64px;
+  padding: 0 24px 48px;
+}
+
+.settings-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.settings-subtitle {
+  font-size: 13px;
+  opacity: 0.8;
+  margin-bottom: 24px;
+}
+
+/* Layout shell */
+
+.settings-shell {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 24px;
+}
+
+/* Sidebar */
+
+.settings-sidebar {
+  background: rgba(15, 23, 42, 0.95);
+  border-radius: 24px;
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+}
+
+.theme-paper .settings-sidebar,
+.theme-pastel .settings-sidebar,
+.theme-citrus .settings-sidebar,
+.theme-rainbow-light .settings-sidebar {
+  background: #0f172a;
+  color: #e5e7eb;
+}
+
+.settings-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.settings-nav-item {
+  width: 100%;
+  border: none;
+  outline: none;
+  border-radius: 999px;
+  padding: 9px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  background: transparent;
+  color: #cbd5f5;
+  cursor: pointer;
+  transition: background 0.16s ease, color 0.16s ease, transform 0.08s ease;
+}
+
+.settings-nav-item:hover {
+  background: rgba(148, 163, 184, 0.16);
+}
+
+.settings-nav-item.is-active {
+  background: #16a34a;
+  color: #ffffff;
+}
+
+.settings-nav-icon {
+  width: 24px;
+  text-align: center;
+}
+
+/* Sidebar user */
+
+.settings-sidebar-user {
+  margin-top: 16px;
+  padding: 10px 12px;
+  border-radius: 16px;
+  background: rgba(15, 23, 42, 0.9);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.settings-sidebar-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: #16a34a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #0b1120;
+}
+
+.settings-sidebar-user-meta {
+  font-size: 11px;
+}
+
+.settings-sidebar-user-name {
+  font-weight: 600;
+}
+
+.settings-sidebar-user-email {
+  opacity: 0.7;
+}
+
+/* Panel */
+
+.settings-panel-wrapper {
+  display: flex;
+}
+
+.settings-panel {
+  flex: 1;
+  border-radius: 24px;
+  padding: 24px 28px 22px;
+  background: #020617;
+  box-shadow: 0 24px 40px rgba(0, 0, 0, 0.55);
+}
+
+/* light / pastel themes */
+.theme-paper .settings-panel,
+.theme-pastel .settings-panel,
+.theme-citrus .settings-panel,
+.theme-rainbow-light .settings-panel {
+  background: #f9fafb;
+  color: #0f172a;
+  box-shadow: 0 18px 32px rgba(15, 23, 42, 0.15);
+}
+
+.settings-panel-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.settings-panel-description {
+  font-size: 13px;
+  opacity: 0.85;
+  margin-bottom: 18px;
+}
+
+/* Sections / rows */
+
+.settings-section-heading {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin-top: 18px;
+  margin-bottom: 8px;
+}
+
+.setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 10px 0;
+}
+
+.setting-row + .setting-row {
+  border-top: 1px solid rgba(148, 163, 184, 0.15);
+}
+
+.theme-paper .setting-row + .setting-row,
+.theme-pastel .setting-row + .setting-row,
+.theme-citrus .setting-row + .setting-row,
+.theme-rainbow-light .setting-row + .setting-row {
+  border-top: 1px solid rgba(148, 163, 184, 0.3);
+}
+
+.setting-row-left {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.setting-row-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.setting-row-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  background: rgba(15, 23, 42, 0.9);
+}
+
+.theme-paper .setting-row-icon,
+.theme-pastel .setting-row-icon,
+.theme-citrus .setting-row-icon,
+.theme-rainbow-light .setting-row-icon {
+  background: #e5e7eb;
+}
+
+.setting-row-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.setting-row-subtitle {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.setting-row-value {
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.setting-row-chip {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  opacity: 0.85;
+}
+
+/* Inputs */
+
+.settings-input {
+  min-width: 220px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  background: rgba(15, 23, 42, 0.9);
+  color: #f9fafb;
+  font-size: 13px;
+}
+
+.settings-input:focus {
+  outline: none;
+  border-color: #22c55e;
+  box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.5);
+}
+
+/* light variants */
+.theme-paper .settings-input,
+.theme-pastel .settings-input,
+.theme-citrus .settings-input,
+.theme-rainbow-light .settings-input {
+  background: #ffffff;
+  color: #111827;
+  border-color: rgba(148, 163, 184, 0.7);
+}
+
+.settings-textarea {
+  width: 100%;
+  margin-top: 4px;
+  border-radius: 16px;
+  padding: 10px 12px;
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  background: rgba(15, 23, 42, 0.9);
+  color: #f9fafb;
+  font-size: 13px;
+  resize: vertical;
+}
+
+.theme-paper .settings-textarea,
+.theme-pastel .settings-textarea,
+.theme-citrus .settings-textarea,
+.theme-rainbow-light .settings-textarea {
+  background: #ffffff;
+  color: #111827;
+}
+
+/* Toggle switch */
+
+.settings-toggle {
+  width: 44px;
+  height: 24px;
+  border-radius: 999px;
+  border: none;
+  background: rgba(51, 65, 85, 0.9);
+  display: inline-flex;
+  align-items: center;
+  padding: 2px;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.16s ease;
+}
+
+.settings-toggle-knob {
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: #e5e7eb;
+  transform: translateX(0);
+  transition: transform 0.16s ease, background 0.16s ease;
+}
+
+.settings-toggle.is-on {
+  background: #22c55e;
+}
+
+.settings-toggle.is-on .settings-toggle-knob {
+  transform: translateX(20px);
+  background: #ffffff;
+}
+
+/* Footer buttons */
+
+.settings-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.settings-save-btn,
+.settings-danger-btn {
+  min-width: 140px;
+  border-radius: 999px;
+  border: none;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.08s ease, box-shadow 0.16s ease,
+    background 0.16s ease;
+}
+
+.settings-save-btn {
+  background: #16a34a;
+  color: #ffffff;
+  box-shadow: 0 14px 24px rgba(22, 163, 74, 0.4);
+}
+
+.settings-save-btn:hover {
+  background: #22c55e;
+  transform: translateY(-1px);
+  box-shadow: 0 18px 30px rgba(34, 197, 94, 0.5);
+}
+
+.settings-save-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+  transform: none;
+  box-shadow: none;
+}
+
+.settings-danger-btn {
+  background: #b91c1c;
+  color: #fee2e2;
+  box-shadow: 0 14px 24px rgba(185, 28, 28, 0.45);
+}
+
+.settings-danger-btn:hover {
+  background: #dc2626;
+  transform: translateY(-1px);
+}
+
+.settings-link {
+  font-size: 13px;
+  color: #22c55e;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.settings-link:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+
+@media (max-width: 920px) {
+  .settings-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .settings-sidebar {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .settings-sidebar-user {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .settings-shell {
+    gap: 16px;
+  }
+
+  .settings-sidebar {
+    overflow-x: auto;
+  }
+
+  .settings-nav {
+    flex-direction: row;
+  }
+
+  .setting-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .setting-row-right {
+    align-self: flex-end;
+  }
+}
+/* ==== Layout shell ===================================================== */
+
+.settings-shell {
+  max-width: 1120px;
+  margin: 24px auto 80px;
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 24px;
+}
+
+/* Stack on small screens */
+@media (max-width: 900px) {
+  .settings-shell {
+    display: block;
+  }
+}
+
+/* Left card (tabs + user) */
+.settings-header-card {
+  border-radius: 24px;
+  padding: 16px 18px 20px;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.5);
+}
+
+/* Tabs row */
+.settings-header-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.settings-tab-btn {
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 13px;
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.settings-tab-btn-active {
+  border-color: transparent;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: #0f172a;
+}
+
+/* User row: 3 columns (avatar / name / email) */
+.settings-header-user {
+  display: grid;
+  grid-template-columns: auto 1fr 1.3fr;
+  align-items: center;
+  gap: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(148, 163, 184, 0.4);
+  margin-top: 6px;
+}
+
+.settings-header-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+/* Name + email text */
+.settings-header-name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.settings-header-email {
+  font-size: 12px;
+  opacity: 0.8;
+  word-break: break-all;
+}
+
+/* Right panel card */
+.settings-panel-card {
+  border-radius: 24px;
+  padding: 24px 28px 26px;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.55);
+}
+
+/* Space between rows inside panel (General / Notifications etc.) */
+.settings-panel-card .setting-row {
+  padding-block: 10px;
+}
+
+/* ==== Dark / light theme support ====================================== */
+
+/* Default (dark-ish) look */
+.settings-header-card,
+.settings-panel-card {
+  background: #020617;           /* dark navy */
+  color: #e5e7eb;                /* light text */
+}
+
+/* Avatar in dark theme */
+.settings-header-avatar {
+  background: #22c55e;
+  color: #022c22;
+}
+
+/* Light themes: paper / rainbow-light / citrus / pastel */
+.theme-paper .settings-header-card,
+.theme-paper .settings-panel-card,
+.theme-rainbow-light .settings-header-card,
+.theme-rainbow-light .settings-panel-card,
+.theme-citrus .settings-header-card,
+.theme-citrus .settings-panel-card,
+.theme-pastel .settings-header-card,
+.theme-pastel .settings-panel-card {
+  background: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+}
+
+.theme-paper .settings-header-avatar,
+.theme-rainbow-light .settings-header-avatar,
+.theme-citrus .settings-header-avatar,
+.theme-pastel .settings-header-avatar {
+  background: #22c55e;
+  color: #052e16;
+}
+
+.theme-paper .settings-tab-btn,
+.theme-rainbow-light .settings-tab-btn,
+.theme-citrus .settings-tab-btn,
+.theme-pastel .settings-tab-btn {
+  border-color: rgba(148, 163, 184, 0.7);
+}
+
+.theme-paper .settings-tab-btn-active,
+.theme-rainbow-light .settings-tab-btn-active,
+.theme-citrus .settings-tab-btn-active,
+.theme-pastel .settings-tab-btn-active {
+  color: #022c22;
+}
+/* ----- Shell layout: sidebar + panel in one row ----- */
+
+.settings-shell {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+  margin-top: 24px;
+}
+
+/* Reuse your old card styles but make it a clean column */
+
+.settings-sidebar {
+  width: 280px;
+  padding: 20px 20px 24px;
+  border-radius: 18px;
+  background: var(--settings-card-bg, rgba(15, 23, 42, 0.98));
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.6);
+}
+
+/* Avatar row at top */
+
+.settings-user-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.4);
+  margin-bottom: 16px;
+}
+
+.settings-avatar-circle {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 16px;
+  background: #22c55e;
+  color: #020617;
+}
+
+.settings-user-name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.settings-user-email {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+/* Tabs one below another */
+
+.settings-tabs-column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.settings-tab-pill {
+  text-align: left;
+  font-size: 13px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: #e5e7eb;
+  cursor: pointer;
+}
+
+.settings-tab-pill:hover {
+  background: rgba(148, 163, 184, 0.15);
+}
+
+.settings-tab-pill-active {
+  background: #22c55e;
+  color: #020617;
+}
+
+/* Right card – just tighten whitespace a little */
+
+.settings-main-card {
+  border-radius: 24px;
+  padding: 24px 28px 20px;
+}
+
+/* Buttons row */
+
+.settings-actions {
+  margin-top: 20px;
+  display: flex;
+  gap: 12px;
+  justify-content: flex-start;
+}
+/* ----- Shell layout: sidebar + panel in one row ----- */
+
+.settings-shell {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+  margin-top: 24px;
+}
+
+/* Reuse your old card styles but make it a clean column */
+
+.settings-sidebar {
+  width: 280px;
+  padding: 20px 20px 24px;
+  border-radius: 18px;
+  background: var(--settings-card-bg, rgba(15, 23, 42, 0.98));
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.6);
+}
+
+/* Avatar row at top */
+
+.settings-user-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.4);
+  margin-bottom: 16px;
+}
+
+.settings-avatar-circle {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 16px;
+  background: #22c55e;
+  color: #020617;
+}
+
+.settings-user-name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.settings-user-email {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+/* Tabs one below another */
+
+.settings-tabs-column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.settings-tab-pill {
+  text-align: left;
+  font-size: 13px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: #e5e7eb;
+  cursor: pointer;
+}
+
+.settings-tab-pill:hover {
+  background: rgba(148, 163, 184, 0.15);
+}
+
+.settings-tab-pill-active {
+  background: #22c55e;
+  color: #020617;
+}
+
+/* Right card – just tighten whitespace a little */
+
+.settings-main-card {
+  border-radius: 24px;
+  padding: 24px 28px 20px;
+}
+
+/* Buttons row */
+
+.settings-actions {
+  margin-top: 20px;
+  display: flex;
+  gap: 12px;
+  justify-content: flex-start;
+}
