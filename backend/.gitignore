@@ -1,0 +1,8 @@
+/target/
+/uploads/
+/.settings/
+/.project
+/.classpath
+/.factorypath
+/.idea/
+*.iml
