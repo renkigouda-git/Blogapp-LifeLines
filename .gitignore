@@ -1,0 +1,25 @@
+# ===== VS Code =====
+.vscode/
+
+# ===== Backend (Spring Boot / Java) =====
+backend/target/
+backend/uploads/
+backend/.settings/
+backend/.project
+backend/.classpath
+backend/.factorypath
+backend/.idea/
+backend/*.iml
+
+# ===== Frontend (React / Vite) =====
+node_modules/
+frontend/node_modules/
+frontend/node_modules/.vite/
+
+# ===== Env / Secrets =====
+.env
+.env.*
+application-local.properties
+
+# ===== OS =====
+.DS_Store
