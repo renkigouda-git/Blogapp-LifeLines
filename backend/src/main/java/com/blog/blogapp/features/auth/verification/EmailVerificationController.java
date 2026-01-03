@@ -1,45 +1,49 @@
 package com.blog.blogapp.features.auth.verification;
 
+import com.blog.blogapp.features.users.repository.UserRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Instant;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/auth/verify")
+@RequestMapping("/api/auth/verify-otp")
 @CrossOrigin(origins = "*")
 public class EmailVerificationController {
 
-    private final EmailVerificationRepository repo;
     private final EmailVerificationService service;
+    private final UserRepository users;
 
-    public EmailVerificationController(EmailVerificationRepository repo, EmailVerificationService service) {
-        this.repo = repo;
+    public EmailVerificationController(
+            EmailVerificationService service,
+            UserRepository users
+    ) {
         this.service = service;
+        this.users = users;
     }
 
-    @GetMapping("/{token}")
-    public ResponseEntity<?> verify(@PathVariable String token) {
+    /** STEP 1: Send OTP */
+    @PostMapping("/send")
+    public ResponseEntity<?> sendOtp(@RequestBody Map<String, String> body) {
+        String email = body.get("email");
 
-        Optional<EmailVerification> rec = repo.findByToken(token);
-        if (rec.isEmpty()) {
-            return ResponseEntity.status(404).body(Map.of("error", "not-found"));
-        }
+        users.findByEmail(email).ifPresent(service::sendOtp);
 
-        EmailVerification ev = rec.get();
+        return ResponseEntity.ok(
+                Map.of("message", "If email exists, OTP has been sent")
+        );
+    }
 
-        if (ev.getExpiresAt().isBefore(Instant.now())) {
-            repo.delete(ev);
-            return ResponseEntity.status(410).body(Map.of("error", "expired"));
-        }
+    /** STEP 2: Confirm OTP */
+    @PostMapping("/confirm")
+    public ResponseEntity<?> confirmOtp(@RequestBody Map<String, String> body) {
+        String email = body.get("email");
+        String otp = body.get("otp");
 
-        boolean ok = service.verify(token);
-        if (ok) {
-            return ResponseEntity.ok(Map.of("status", "ok"));
-        }
+        boolean ok = service.verifyOtp(email, otp);
 
-        return ResponseEntity.status(400).body(Map.of("error", "invalid-token"));
+        return ok
+                ? ResponseEntity.ok(Map.of("status", "email-verified"))
+                : ResponseEntity.badRequest().body(Map.of("error", "invalid-or-expired-otp"));
     }
 }

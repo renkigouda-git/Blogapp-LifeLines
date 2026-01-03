@@ -62,22 +62,21 @@ export default function Login() {
       } else {
         setError("Invalid email or password.");
       }
+     } catch (err) {
+  const backendError = err?.response?.data?.error;
 
-    } catch (err) {
-      const backendError = err?.response?.data?.error;
+  if (
+    err?.response?.status === 403 &&
+    backendError === "verify-email"
+  ) {
+    setError("Email not verified. Please enter the OTP sent to your email.");
+    return;
+  }
 
-      // ⭐ HANDLE verify-email / email-not-verified (from backend)
-      if (
-        err?.response?.status === 403 &&
-        (backendError === "verify-email" || backendError === "email-not-verified")
-      ) {
-        setError("Please verify your email first.");
-        return;
-      }
+  setError("Invalid email or password.");
+}
 
-      // default error
-      setError("Invalid email or password.");
-    } finally {
+    finally {
       setLoading(false);
     }
   };
@@ -162,9 +161,9 @@ export default function Login() {
           Forgot password?
         </Link>{" "}
         ・{" "}
-        <Link className="link" to="/resend-verification">
-          Resend verification
-        </Link>
+        <Link className="link" to="/verify">Verify email</Link>
+
+
       </p>
 
       <p className="small" style={{ marginTop: ".6rem" }}>

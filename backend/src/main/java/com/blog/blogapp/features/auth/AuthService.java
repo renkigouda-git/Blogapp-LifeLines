@@ -39,16 +39,13 @@ public class AuthService {
 
         u.setBanned(true); // require verification
         users.save(u);
+        emailVerificationService.sendOtp(u);
 
-        String token = emailVerificationService.createToken(u);
-        String verifyUrl = "http://localhost:5173/verify/" + token;
+return Map.of(
+    "message", "Account created. Please verify OTP sent to your email."
+);
 
-        System.out.println("VERIFY LINK: " + verifyUrl);
-
-        return Map.of(
-            "message", "Account created",
-            "verifyUrl", verifyUrl
-        );
+        
     }
 
     public Map<String,Object> login(String email, String password){

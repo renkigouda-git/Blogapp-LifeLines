@@ -468,3 +468,17 @@ input.input[placeholder*="Search"]{
   border-color: transparent;
   box-shadow: 0 3px 10px rgba(0,0,0,.18);
 }
+:root {
+  --bg: #ffffff;
+  --text: #111111;
+  --input-bg: #ffffff;
+  --border: #d9d9d9;
+  --primary: #00c2ff;
+}
+
+[data-theme="dark"] {
+  --bg: #0b0f1a;
+  --text: #f5f5f5;
+  --input-bg: #111827;
+  --border: #2a2f45;
+}

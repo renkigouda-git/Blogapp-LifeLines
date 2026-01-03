@@ -4,6 +4,7 @@ import com.blog.blogapp.features.users.entity.User;
 import com.blog.blogapp.features.users.repository.UserRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.Map;
 
 @RestController
@@ -19,36 +20,39 @@ public class PasswordResetController {
         this.users = users;
     }
 
+    /** STEP 1: Request OTP */
     @PostMapping("/forgot")
-    public ResponseEntity<?> forgot(@RequestBody User req) {
-        User u = users.findByEmail(req.getEmail()).orElse(null);
+    public ResponseEntity<?> forgot(@RequestBody Map<String, String> body) {
+        String email = body.get("email");
+        users.findByEmail(email).ifPresent(service::sendOtp);
 
-        String message = "If email exists, reset link was sent.";
-
-        if (u != null) {
-            String token = service.createResetToken(u);
-            String link = "http://localhost:5173/reset/" + token;
-
-            // Print link for debugging
-            System.out.println("RESET LINK: " + link);
-
-            return ResponseEntity.ok(Map.of(
-                    "message", message,
-                    "resetLink", link
-            ));
-        }
-
-        return ResponseEntity.ok(Map.of(
-                "message", message
-        ));
+        // generic response (official behavior)
+        return ResponseEntity.ok(
+                Map.of("message", "If email exists, OTP has been sent")
+        );
     }
 
-    @PostMapping("/reset/{token}")
-    public ResponseEntity<?> reset(@PathVariable String token, @RequestBody Map<String,String> body) {
-        boolean ok = service.resetPassword(token, body.get("password"));
+    /** STEP 2: Verify OTP */
+    @PostMapping("/verify-otp")
+    public ResponseEntity<?> verifyOtp(@RequestBody Map<String, String> body) {
+        String email = body.get("email");
+        String otp = body.get("otp");
 
+        boolean ok = service.verifyOtp(email, otp);
         return ok
-                ? ResponseEntity.ok("Password updated")
-                : ResponseEntity.badRequest().body("Invalid or expired reset token");
+                ? ResponseEntity.ok(Map.of("status", "otp-verified"))
+                : ResponseEntity.badRequest().body(Map.of("error", "invalid-or-expired-otp"));
+    }
+
+    /** STEP 3: Reset Password */
+    @PostMapping("/reset")
+    public ResponseEntity<?> reset(@RequestBody Map<String, String> body) {
+        String email = body.get("email");
+        String password = body.get("password");
+
+        boolean ok = service.resetPassword(email, password);
+        return ok
+                ? ResponseEntity.ok(Map.of("status", "password-updated"))
+                : ResponseEntity.badRequest().body(Map.of("error", "reset-failed"));
     }
 }

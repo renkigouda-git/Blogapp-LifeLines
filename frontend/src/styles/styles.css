@@ -749,3 +749,56 @@ button:active, .btn:active {
   90%  { transform: translateY(2px) rotate(0deg)  scale(1.01); }
   100% { transform: translateY(0) rotate(0deg)  scale(1); }
 }
+.otp-box {
+  width: 42px;
+  height: 48px;
+  text-align: center;
+  font-size: 1.1rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--input-bg);
+  color: var(--text);
+  outline: none;
+}
+
+.otp-box:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(0, 180, 255, 0.3);
+}
+/* ===== INPUT & OTP TEXT VISIBILITY (FINAL FIX) ===== */
+
+.input,
+.otp-box {
+  color: var(--text) !important;
+  -webkit-text-fill-color: var(--text) !important;
+}
+
+/* placeholder stays softer */
+.input::placeholder,
+.otp-box::placeholder {
+  color: var(--sub);
+  -webkit-text-fill-color: var(--sub);
+}
+/* ===== OTP INPUT VISIBILITY FIX ===== */
+.otp-box {
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--border, rgba(0,0,0,.2));
+  text-align: center;
+  font-weight: 700;
+}
+
+.otp-box::placeholder {
+  color: var(--sub);
+}
+
+.otp-box:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+/* ===== FORCE INPUT TEXT VISIBILITY (ALL THEMES) ===== */
+.input,
+input,
+textarea {
+  color: var(--text) !important;
+}

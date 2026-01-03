@@ -1,6 +1,7 @@
 // src/pages/Register.jsx
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 import { api } from "../api";
 import GoogleLoginButton from "../components/GoogleLoginButton";
 
@@ -11,6 +12,7 @@ import Tooltip from "../ui/Tooltip.jsx";
 import PasswordStrengthBar from "../ui/PasswordStrengthBar.jsx";
 
 export default function Register() {
+    const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,10 +21,7 @@ export default function Register() {
   const [msg, setMsg] = useState("");
   const [busy, setBusy] = useState(false);
 
-  // ⭐ DEV verify link
-  const isDev = import.meta.env.DEV;
-  const [devVerifyLink, setDevVerifyLink] = useState("");
-
+  
   function validateEmail(email) {
     const regex =
       /^[a-zA-Z0-9._%+-]+@(gmail|yahoo|icloud|outlook|hotmail|live|protonmail|zoho)\.com$/;
@@ -59,7 +58,6 @@ export default function Register() {
     if (!allValid || busy) return;
 
     setMsg("");
-    setDevVerifyLink("");
 
     try {
       setBusy(true);
@@ -68,16 +66,9 @@ export default function Register() {
       const res = await api.post("/api/auth/register", { name, email, password });
 
       // Success
-      setMsg("Account created. Please verify your email.");
-
-      // ⭐ backend sends verifyUrl
-      if (isDev && res.data?.verifyUrl) {
-        setDevVerifyLink(res.data.verifyUrl);
-      }
-
-      // ❌ NO REDIRECT to login
-      // User must verify first
-
+      setMsg("Account created. Please enter the OTP sent to your email.");
+      setTimeout(() => navigate("/verify", { state: { email } }), 800);
+     
     } catch (err) {
       setMsg("Registration failed.");
     } finally {
@@ -166,17 +157,6 @@ export default function Register() {
       {msg && (
         <p className="small" style={{ marginTop: ".6rem" }}>{msg}</p>
       )}
-
-      {/* ⭐ DEV-MODE VERIFY LINK */}
-      {isDev && devVerifyLink && (
-        <p className="small" style={{ marginTop: ".6rem", color: "cyan" }}>
-          <strong>DEV Verify Link:</strong><br />
-          <a href={devVerifyLink} style={{ color: "cyan" }}>
-            {devVerifyLink}
-          </a>
-        </p>
-      )}
-
       <p className="small" style={{ marginTop: ".6rem" }}>
         Already have an account? <Link to="/login">Login</Link>
       </p>

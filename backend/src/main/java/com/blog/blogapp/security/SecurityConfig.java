@@ -61,6 +61,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/auth/resend-verification").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/auth/verify/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/auth/verify-otp/**").permitAll()
+
 
                 // public password endpoints
                 .requestMatchers("/api/password/**").permitAll()

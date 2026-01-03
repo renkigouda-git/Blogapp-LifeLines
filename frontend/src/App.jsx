@@ -18,7 +18,6 @@ import Dashboard from './pages/Dashboard.jsx'
 import Admin from './pages/Admin.jsx'
 import EditPost from './pages/EditPost.jsx'
 import ForgotPassword from './pages/ForgotPassword.jsx'
-import ResendVerification from './pages/ResendVerification.jsx'
 import Magazine from './pages/Magazine.jsx'
 import SeriesForm from './pages/admin/SeriesForm'
 import TagForm from './pages/admin/TagForm'
@@ -103,7 +102,6 @@ export default function App(){
           <Route path="/login" element={<Login/>} />
           <Route path="/register" element={<Register/>} />
           <Route path="/forgot-password" element={<ForgotPassword/>} />
-          <Route path="/resend-verification" element={<ResendVerification/>} />
 
           {/* Private */}
           <Route path="/posts/:id/edit" element={<Protected><EditPost/></Protected>} />
@@ -121,8 +119,8 @@ export default function App(){
           <Route path="/admin/users" element={<Protected><UsersAdmin/></Protected>} />
           <Route path="/admin/moderation" element={<Protected><Moderation/></Protected>} />
           <Route path="/admin/features" element={<Protected><FeatureSlots/></Protected>} />
-          <Route path="/verify/:token" element={<Verify />} />
-          <Route path="/reset/:token" element={<ResetPassword />} />
+          <Route path="/verify" element={<Verify />} />
+<Route path="/reset-password" element={<ResetPassword />} />
 
           {/* Analytics (private, same protection as dashboard) */}
           <Route path="/analytics" element={<Protected><Analytics/></Protected>} />
