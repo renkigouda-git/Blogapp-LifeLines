@@ -1,4 +1,5 @@
 // src/pages/Magazine.jsx
+
 import React, { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { api } from '../api'
@@ -7,12 +8,21 @@ import ExternalLink from '../components/ExternalLink'
 import SmartImg from "../components/SmartImg";
 import { loadFeatureSlotsFromStorage, normalizeSlots } from '../utils/featureStorage'
 import Seo from '../components/Seo.jsx'
+import { parseICS } from "../utils/icsParser"
 
 /* ---------- tiny helper: hide a broken <img> gracefully ---------- */
 function SafeImg(props){
   const [ok, setOk] = useState(true)
   if (!ok) return null
   return <img {...props} onError={() => setOk(false)} />
+}
+function isFutureEvent(dateStr) {
+  if (!dateStr) return false
+  const d = new Date(dateStr)
+  if (Number.isNaN(d.getTime())) return false
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  return d >= today
 }
 
 /* ===================== Curated rails (your data + images) ===================== */
@@ -104,42 +114,8 @@ const NEWS_ITEMS = [
   { text: 'Performance checklist for 2025', href: 'https://web.dev/fast/', img: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&q=80&auto=format&fit=crop' },
 ]
 
-/* ===================== Events sources (unchanged) ===================== */
-const REMOTE_EVENTS = import.meta.env.VITE_EVENTS_JSON?.trim()
-const CAL_ICS_URL   = import.meta.env.VITE_CALENDAR_ICS?.trim()
 
-const FALLBACK_EVENTS = [
-  { title: 'Design Meetup',       date: '2025-11-21', link: 'https://www.meetup.com/' },
-  { title: 'Street Photo Walk',   date: '2025-11-28', link: 'https://unsplash.com' },
-  { title: 'JS Conf Online',      date: '2025-12-10', link: 'https://confs.tech' },
-  { title: 'Writers’ Room Live',  date: '2025-12-18', link: 'https://discord.com' },
-  { title: 'React Meetup',        date: '2026-01-09', link: 'https://react.dev/community' },
-]
 
-// Minimal ICS → [{title, date(YYYY-MM-DD), link?}]
-function parseICS(icsText) {
-  const items = []
-  const blocks = icsText.split(/BEGIN:VEVENT/gi).slice(1)
-  for (const blkRaw of blocks) {
-    const blk = blkRaw.split(/END:VEVENT/gi)[0]
-    const summary = (blk.match(/SUMMARY:(.*)/) || [])[1]?.trim()
-    const dt = (blk.match(/DTSTART.*:(\d{8})/) || [])[1] // YYYYMMDD
-    let url = (blk.match(/URL:(.*)/) || [])[1]?.trim()
-    if (!url) {
-      const desc = (blk.match(/DESCRIPTION:(.*)/) || [])[1] || ''
-      const m = desc.match(/https?:\/\/\S+/)
-      url = m ? m[0] : ''
-    }
-    if (summary && dt) {
-      const y = dt.slice(0,4), m = dt.slice(4,6), d = dt.slice(6,8)
-      const iso = `${y}-${m}-${d}`
-      const today = new Date(); today.setHours(0,0,0,0)
-      if (new Date(iso) >= today) items.push({ title: summary, date: iso, link: url || '#' })
-    }
-  }
-  items.sort((a, b) => new Date(a.date) - new Date(b.date))
-  return items.slice(0, 8)
-}
 
 const hasTag = (post, tag) => {
   const src = `${post.title || ''} ${post.content || ''}`.toLowerCase()
@@ -149,7 +125,7 @@ const hasTag = (post, tag) => {
 /* ===================== Component ===================== */
 export default function Magazine() {
   const [posts, setPosts]   = useState([])
-  const [events, setEvents] = useState(FALLBACK_EVENTS)
+  const [events, setEvents] = useState([])
   const [slots, setSlots]   = useState([])
 
   // Load posts
@@ -186,66 +162,42 @@ export default function Magazine() {
     })()
     return () => { cancelled = true }
   }, [])
-
-  // Load events with real refresh every 30 min
-  useEffect(() => {
-    let cancelled = false
-
-    async function fetchRemoteJSON() {
-      if (!REMOTE_EVENTS) return null
-      try {
-        const r = await fetch(REMOTE_EVENTS, { cache: 'no-store' })
-        if (!r.ok) return null
-        const json = await r.json()
-        if (!Array.isArray(json)) return null
-        return json
-          .filter(e => e.title && e.date)
-          .sort((a, b) => new Date(a.date) - new Date(b.date))
-          .slice(0, 8)
-      } catch { return null }
+   useEffect(() => {
+  async function loadCalendar() {
+    try {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_BASE}/api/events/ics`,
+        { cache: "no-store" }
+      )
+      const text = await res.text()
+      const parsed = parseICS(text)
+      setEvents(parsed)
+    } catch (err) {
+      console.error("Calendar load failed", err)
     }
+  }
 
-    async function fetchICS() {
-      if (!CAL_ICS_URL) return null
-      try {
-        const r = await fetch(CAL_ICS_URL, { cache: 'no-store' })
-        if (!r.ok) return null
-        return parseICS(await r.text())
-      } catch { return null }
-    }
+  loadCalendar()
+}, [])
 
-    async function fetchLocalJSON() {
-      try {
-        const r = await fetch('/events.json', { cache: 'no-store' })
-        if (!r.ok) return null
-        const json = await r.json()
-        if (!Array.isArray(json)) return null
-        return json
-          .filter(e => e.title && e.date)
-          .sort((a, b) => new Date(a.date) - new Date(b.date))
-          .slice(0, 8)
-      } catch { return null }
-    }
+  const upcomingEvents = useMemo(() => {
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
 
-    async function refresh() {
-      const sources = [fetchRemoteJSON, fetchICS, fetchLocalJSON]
-      for (const src of sources) {
-        const data = await src()
-        if (cancelled) return
-        if (data && data.length) { setEvents(data); return }
-      }
-      const today = new Date(); today.setHours(0,0,0,0)
-      const future = FALLBACK_EVENTS
-        .filter(e => new Date(e.date) >= today)
-        .sort((a, b) => new Date(a.date) - new Date(b.date))
-        .slice(0, 8)
-      if (!cancelled) setEvents(future)
-    }
+  const seen = new Set()
 
-    refresh()
-    const id = setInterval(refresh, 30 * 60 * 1000)
-    return () => { cancelled = true; clearInterval(id) }
-  }, [])
+  return events.filter(e => {
+    const d = new Date(e.date)
+    if (Number.isNaN(d.getTime()) || d < today) return false
+
+    // 🔑 dedupe key
+    const key = `${e.title}-${e.date}`
+    if (seen.has(key)) return false
+
+    seen.add(key)
+    return true
+  })
+}, [events])
 
   // Hero & latest slices — prefer feature slots when present
   const { cover, spot, latest } = useMemo(() => {
@@ -322,7 +274,7 @@ export default function Magazine() {
       {/* Ticker */}
       <div className="ticker">
         <div className="ticker-track">
-          {events.map((e, i) => (
+          {upcomingEvents.map((e, i) => (
             <span className="ticker-item" key={i}>🔥 {e.title} • {e.date}</span>
           ))}
         </div>
@@ -343,7 +295,7 @@ export default function Magazine() {
       <section className="mag-events">
         <h3 className="mag-section-title">Upcoming</h3>
         <div className="mag-chips">
-          {events.map((e, i) => (
+          {upcomingEvents.map((e, i) => (
             <ExternalLink key={i} href={e.link || '#'} className="chip">
               {e.title} • {e.date} ↗
             </ExternalLink>

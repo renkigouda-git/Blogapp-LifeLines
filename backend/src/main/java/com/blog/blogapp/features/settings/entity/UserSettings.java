@@ -45,6 +45,12 @@ public class UserSettings {
 
     @Column(nullable = false)
     private String notifyEmailDigest = "off";
+    // PRIVACY
+@Column(nullable = false)
+private String profileVisibility = "public"; // public | private
+
+@Column(nullable = false)
+private String commentPermission = "everyone"; // everyone | none
 
     private Instant updatedAt;
 
@@ -143,4 +149,20 @@ public class UserSettings {
     public Instant getUpdatedAt() {
         return updatedAt;
     }
+    public String getProfileVisibility() {
+    return profileVisibility;
+}
+
+public void setProfileVisibility(String profileVisibility) {
+    this.profileVisibility = profileVisibility;
+}
+
+public String getCommentPermission() {
+    return commentPermission;
+}
+
+public void setCommentPermission(String commentPermission) {
+    this.commentPermission = commentPermission;
+}
+
 }

@@ -11,7 +11,8 @@ public record UserSettingsDto(
         boolean animationsEnabled,
         boolean notifyAdminAnnouncements,
         boolean notifyComments,
-        String notifyEmailDigest
+        String notifyEmailDigest,String profileVisibility,
+        String commentPermission
 ) {
 
     public static UserSettingsDto from(UserSettings s) {
@@ -24,7 +25,8 @@ public record UserSettingsDto(
                 s.isAnimationsEnabled(),
                 s.isNotifyAdminAnnouncements(),
                 s.isNotifyComments(),
-                s.getNotifyEmailDigest()
+                s.getNotifyEmailDigest(),s.getProfileVisibility(),
+                s.getCommentPermission()
         );
     }
 
@@ -38,5 +40,7 @@ public record UserSettingsDto(
         s.setNotifyAdminAnnouncements(notifyAdminAnnouncements);
         s.setNotifyComments(notifyComments);
         s.setNotifyEmailDigest(notifyEmailDigest);
+        s.setProfileVisibility(profileVisibility);
+        s.setCommentPermission(commentPermission);
     }
 }

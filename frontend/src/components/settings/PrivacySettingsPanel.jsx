@@ -1,16 +1,8 @@
 // src/components/settings/PrivacySettingsPanel.jsx
-import React, { useState } from "react";
+import React from "react";
 
-export default function PrivacySettingsPanel() {
-  const [profileVisibility, setProfileVisibility] = useState("public");
-  const [commentsAccess, setCommentsAccess] = useState("everyone");
-
-  const handleSave = () => {
-    // For now, just store in localStorage so it "feels" real
-    const v = { profileVisibility, commentsAccess };
-    localStorage.setItem("blogapp:privacy", JSON.stringify(v));
-    alert("Privacy preferences saved on this device (no server yet).");
-  };
+export default function PrivacySettingsPanel({ prefs, updatePref }) {
+  if (!prefs) return null;
 
   return (
     <section className="settings-panel">
@@ -20,38 +12,46 @@ export default function PrivacySettingsPanel() {
       </p>
 
       <div className="settings-card">
+        {/* PROFILE VISIBILITY */}
         <div className="form-row">
           <label>Profile visibility</label>
           <select
-            value={profileVisibility}
-            onChange={(e) => setProfileVisibility(e.target.value)}
+            value={prefs.profileVisibility || "public"}
+            onChange={(e) =>
+              updatePref("profileVisibility", e.target.value)
+            }
           >
             <option value="public">Public</option>
-            <option value="followers">Only followers</option>
-            <option value="private">Only me</option>
+            <option value="private">Private</option>
           </select>
+
           <span className="muted small">
-            This is a UI-only setting for now; backend filtering can be added
-            later.
+            Private profiles do not allow comments on posts.
           </span>
         </div>
 
+        {/* COMMENT PERMISSION */}
         <div className="form-row">
           <label>Who can comment on my posts</label>
           <select
-            value={commentsAccess}
-            onChange={(e) => setCommentsAccess(e.target.value)}
+            value={prefs.commentPermission || "everyone"}
+            onChange={(e) =>
+              updatePref("commentPermission", e.target.value)
+            }
           >
             <option value="everyone">Everyone</option>
-            <option value="followers">Only followers</option>
-            <option value="disabled">No one (comments off)</option>
+            <option value="none">No one</option>
           </select>
+
+          <span className="muted small">
+            Admins can always comment regardless of this setting.
+          </span>
         </div>
 
         <div className="settings-footer">
-          <button className="btn primary" onClick={handleSave}>
-            Save changes
-          </button>
+          <span className="muted small">
+            Click <b>Save changes</b> to apply these settings.
+          </span>
         </div>
       </div>
     </section>

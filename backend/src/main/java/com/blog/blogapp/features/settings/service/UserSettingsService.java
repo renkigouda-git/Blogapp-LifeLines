@@ -45,6 +45,8 @@ public class UserSettingsService {
 
         UserSettings s = new UserSettings();
         s.setUser(user);
+        s.setProfileVisibility("public");
+s.setCommentPermission("everyone");
 
         // sensible defaults
         s.setStartAtLogin(false);

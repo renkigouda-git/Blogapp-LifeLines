@@ -3,33 +3,57 @@ import React, { useState } from "react";
 import { api } from "../../api";
 
 export default function HelpFeedbackPanel() {
-  const [text, setText] = useState("");
+  const [message, setMessage] = useState("");
   const [sending, setSending] = useState(false);
 
-  async function send() {
-    if (!text.trim()) { alert("Write something first"); return; }
+  const sendFeedback = async () => {
+    if (!message.trim()) {
+      alert("Please write your message before sending.");
+      return;
+    }
+
     setSending(true);
     try {
-      await api.post("/feedback", { message: text });
-      alert("Thanks — feedback sent");
-      setText("");
+      await api.post("/contact", {
+        message,
+      });
+      alert("Thanks for your feedback! 🙌");
+      setMessage("");
     } catch (e) {
-      alert("Feedback not sent to server (backend may be offline). Your feedback remains local.");
-      console.warn(e);
+      alert(
+        "Could not send feedback to server. Please try again later."
+      );
     } finally {
       setSending(false);
     }
-  }
+  };
 
   return (
     <section className="settings-panel">
       <h2>Help & feedback</h2>
-      <p className="muted">Found a bug or have an idea? Tell us what you think.</p>
+      <p className="muted">
+        Found a bug, have a question, or an idea to improve BlogApp?
+        Let us know.
+      </p>
 
       <div className="settings-card">
-        <textarea value={text} onChange={(e) => setText(e.target.value)} placeholder="Describe your issue or suggestion…" className="settings-feedback-input" rows={5} />
+        <div className="form-row">
+          <label>Your message</label>
+          <textarea
+            className="settings-feedback-input"
+            rows={5}
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            placeholder="Describe your issue, suggestion, or feedback…"
+          />
+        </div>
+
         <div className="settings-footer">
-          <button className="btn primary" onClick={send} disabled={sending}>
+          <button
+            className="btn primary"
+            onClick={sendFeedback}
+            disabled={sending}
+          >
             {sending ? "Sending…" : "Send feedback"}
           </button>
         </div>

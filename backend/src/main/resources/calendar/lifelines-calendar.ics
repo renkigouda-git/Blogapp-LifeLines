@@ -1,0 +1,175 @@
+BEGIN:VCALENDAR
+PRODID:-//Google Inc//Google Calendar 70.9054//EN
+VERSION:2.0
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:LifeLines Events
+X-WR-TIMEZONE:Asia/Kolkata
+X-WR-CALDESC:Official LifeLines community events and meetups\n
+BEGIN:VTIMEZONE
+TZID:Asia/Kolkata
+X-LIC-LOCATION:Asia/Kolkata
+BEGIN:STANDARD
+TZOFFSETFROM:+0530
+TZOFFSETTO:+0530
+TZNAME:GMT+5:30
+DTSTART:19700101T000000
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+DTSTART;TZID=Asia/Kolkata:20260107T200000
+DTEND;TZID=Asia/Kolkata:20260107T210000
+DTSTAMP:20260104T064647Z
+UID:367pa5h05fts075e62e32umt1h@google.com
+X-GOOGLE-CONFERENCE:https://meet.google.com/guf-syfx-ext
+RECURRENCE-ID;TZID=Asia/Kolkata:20260107T200000
+CREATED:20260104T063453Z
+DESCRIPTION:Weekly tech discussions on software\, careers\, and problem sol
+ ving.\n\nTopics:\n• Web & backend development\n• Career guidance\n• Live Q&
+ A\n\nJoin with Google Meet: https://meet.google.com/guf-syfx-ext\n\nLearn m
+ ore about Meet at: https://support.google.com/a/users/answer/9282720
+LAST-MODIFIED:20260104T064342Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:💻LifeLines Developer & Tech Talks
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Asia/Kolkata:20260110T170000
+DTEND;TZID=Asia/Kolkata:20260110T180000
+RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20261226T182959Z;BYDAY=SA
+DTSTAMP:20260104T064647Z
+UID:6fum9kh7gmb0dl9o2sdrv3hqh6@google.com
+X-GOOGLE-CONFERENCE:https://meet.google.com/agk-ifdc-poc
+CREATED:20260104T063931Z
+DESCRIPTION:LifeLines Open Community Meetup is a relaxed weekly gathering f
+ or everyone in the LifeLines community.\n\nWhat to expect:\n• Open discussi
+ ons and idea sharing\n• Personal growth & experiences\n• Career\, learning\
+ , and life topics\n• Community bonding and networking\n\nNo fixed agenda — 
+ just meaningful conversations.\nJoin via Google Meet.\n\nJoin with Google M
+ eet: https://meet.google.com/agk-ifdc-poc\n\nLearn more about Meet at: http
+ s://support.google.com/a/users/answer/9282720
+LAST-MODIFIED:20260104T063932Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:🌍 LifeLines Open Community Meetup
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Asia/Kolkata:20260109T180000
+DTEND;TZID=Asia/Kolkata:20260109T190000
+DTSTAMP:20260104T064647Z
+UID:5krskmehsmn37b60mgfc1btp3n@google.com
+X-GOOGLE-CONFERENCE:https://meet.google.com/dvr-njpa-tkc
+RECURRENCE-ID;TZID=Asia/Kolkata:20260109T180000
+CREATED:20260104T063710Z
+DESCRIPTION:LifeLines Student Study Circle is a focused weekly session for 
+ students to learn together\, clear doubts\, and stay consistent.\n\nWhat we
+  do:\n• Group study & revision\n• Concept discussions (CS\, exams\, skills)
+ \n• Doubt clearing & peer support\n• Study motivation and discipline\n\nOpe
+ n to all students.\nJoin via Google Meet.\n\nJoin with Google Meet: https:/
+ /meet.google.com/dvr-njpa-tkc\n\nLearn more about Meet at: https://support.
+ google.com/a/users/answer/9282720
+LAST-MODIFIED:20260104T064118Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:🧠LifeLines Student Study Circle
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Asia/Kolkata:20260105T203000
+DTEND;TZID=Asia/Kolkata:20260105T213000
+RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20261228T182959Z;BYDAY=MO
+DTSTAMP:20260104T064647Z
+UID:2f5tibtjoj1d3aoinedgq9ef02@google.com
+X-GOOGLE-CONFERENCE:https://meet.google.com/cgy-spnt-nmg
+CREATED:20260104T064047Z
+DESCRIPTION:LifeLines Goal & Habit Building session focuses on building bet
+ ter routines\, clarity\, and long-term consistency.\n\nSession focus:\n• Go
+ al setting and tracking\n• Habit building techniques\n• Productivity & mind
+ set\n• Weekly reflection and planning\n\nIdeal for anyone working on self-i
+ mprovement.\nJoin via Google Meet.\n\nJoin with Google Meet: https://meet.g
+ oogle.com/cgy-spnt-nmg\n\nLearn more about Meet at: https://support.google.
+ com/a/users/answer/9282720
+LAST-MODIFIED:20260104T064048Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:🎯 LifeLines Goal & Habit Building
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Asia/Kolkata:20260109T180000
+DTEND;TZID=Asia/Kolkata:20260109T190000
+RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20261225T182959Z;BYDAY=FR
+DTSTAMP:20260104T064647Z
+UID:5krskmehsmn37b60mgfc1btp3n@google.com
+X-GOOGLE-CONFERENCE:https://meet.google.com/dvr-njpa-tkc
+CREATED:20260104T063710Z
+DESCRIPTION:LifeLines Student Study Circle is a focused weekly session for 
+ students to learn together\, clear doubts\, and stay consistent.\n\nWhat we
+  do:\n• Group study & revision\n• Concept discussions (CS\, exams\, skills)
+ \n• Doubt clearing & peer support\n• Study motivation and discipline\n\nOpe
+ n to all students.\nJoin via Google Meet.\n\nJoin with Google Meet: https:/
+ /meet.google.com/dvr-njpa-tkc\n\nLearn more about Meet at: https://support.
+ google.com/a/users/answer/9282720
+LAST-MODIFIED:20260104T064118Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:LifeLines Student Study Circle
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Asia/Kolkata:20260104T190000
+DTEND;TZID=Asia/Kolkata:20260104T203000
+RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20261129T182959Z;BYDAY=SU
+DTSTAMP:20260104T064647Z
+UID:0o2f11h8ctf0r0on8bgj4t5hne@google.com
+X-GOOGLE-CONFERENCE:https://meet.google.com/ekx-zggt-mtt
+CREATED:20260104T063318Z
+DESCRIPTION:LifeLines weekly online meetup for writers\, students\, and dev
+ elopers.\n\nAgenda:\n• Writing & learning discussion\n• Sharing ideas and p
+ rogress\n• Open community interaction\n\nJoin via Google Meet.\n\nJoin with
+  Google Meet: https://meet.google.com/ekx-zggt-mtt\n\nLearn more about Meet
+  at: https://support.google.com/a/users/answer/9282720
+LAST-MODIFIED:20260104T064322Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:LifeLines Weekly Writing & Learning
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Asia/Kolkata:20260104T190000
+DTEND;TZID=Asia/Kolkata:20260104T203000
+DTSTAMP:20260104T064647Z
+UID:0o2f11h8ctf0r0on8bgj4t5hne@google.com
+X-GOOGLE-CONFERENCE:https://meet.google.com/ekx-zggt-mtt
+RECURRENCE-ID;TZID=Asia/Kolkata:20260104T190000
+CREATED:20260104T063318Z
+DESCRIPTION:LifeLines weekly online meetup for writers\, students\, and dev
+ elopers.\n\nAgenda:\n• Writing & learning discussion\n• Sharing ideas and p
+ rogress\n• Open community interaction\n\nJoin via Google Meet.\n\nJoin with
+  Google Meet: https://meet.google.com/ekx-zggt-mtt\n\nLearn more about Meet
+  at: https://support.google.com/a/users/answer/9282720
+LAST-MODIFIED:20260104T064322Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:✍️LifeLines Weekly Writing & Learning
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=Asia/Kolkata:20260107T200000
+DTEND;TZID=Asia/Kolkata:20260107T210000
+RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20261230T182959Z;BYDAY=WE
+DTSTAMP:20260104T064647Z
+UID:367pa5h05fts075e62e32umt1h@google.com
+CREATED:20260104T063453Z
+DESCRIPTION:Weekly tech discussions on software\, careers\, and problem sol
+ ving.\n\nTopics:\n• Web & backend development\n• Career guidance\n• Live Q&
+ A
+LAST-MODIFIED:20260104T063739Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:LifeLines Developer & Tech Talks
+TRANSP:OPAQUE
+END:VEVENT
+END:VCALENDAR

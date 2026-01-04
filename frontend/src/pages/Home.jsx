@@ -7,36 +7,7 @@ import { useAuth } from '../hooks/useAuth'
 import MagazineHero from '../components/MagazineHero'
 import { loadFeatureSlotsFromStorage, normalizeSlots } from '../utils/featureStorage'
 import Seo from '../components/Seo.jsx'
-
-const REMOTE_EVENTS = import.meta.env.VITE_EVENTS_JSON || ''  // ← NEW
-
-function isFuture(dateStr){
-  const d = new Date(dateStr)
-  if (Number.isNaN(d.getTime())) return false
-  const today = new Date()
-  today.setHours(0,0,0,0)
-  return d >= today
-}
-
-async function fetchEventsOnce(){
-  if (REMOTE_EVENTS) {
-    try {
-      const r = await fetch(REMOTE_EVENTS, { cache: 'no-store' })
-      if (r.ok) {
-        const data = await r.json()
-        return Array.isArray(data) ? data : []
-      }
-    } catch {}
-  }
-  try {
-    const r = await fetch('/events.json', { cache: 'no-store' })
-    if (r.ok) {
-      const data = await r.json()
-      return Array.isArray(data) ? data : []
-    }
-  } catch {}
-  return []
-}
+import { parseICS } from "../utils/icsParser"
 
 export default function Home() {
   const [posts, setPosts] = useState([])
@@ -92,23 +63,42 @@ export default function Home() {
   }, [])
 
   // events (REMOTE → local fallback), future-only, refresh every 30 min
-  useEffect(() => {
-    let off = false
-    let timer = null
-
-    const load = async () => {
-      const raw = await fetchEventsOnce()
-      const futureSorted = raw
-        .filter(e => isFuture(e.date))
-        .sort((a,b) => new Date(a.date) - new Date(b.date))
-      if (!off) setEvents(futureSorted)
+  
+useEffect(() => {
+  async function loadCalendar() {
+    try {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_BASE}/api/events/ics`,
+        { cache: "no-store" }
+      )
+      const text = await res.text()
+      const parsed = parseICS(text)
+      setEvents(parsed)
+    } catch (err) {
+      console.error("Calendar load failed", err)
     }
+  }
 
-    load()
-    timer = setInterval(load, 30 * 60 * 1000) // 30 minutes
+  loadCalendar()
+}, [])
+const upcomingEvents = useMemo(() => {
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
 
-    return () => { off = true; if (timer) clearInterval(timer) }
-  }, [])
+  const seen = new Set()
+
+  return events.filter(e => {
+    const d = new Date(e.date)
+    if (Number.isNaN(d.getTime()) || d < today) return false
+
+    // 🔑 unique key = title + date
+    const key = `${e.title}-${e.date}`
+    if (seen.has(key)) return false
+
+    seen.add(key)
+    return true
+  })
+}, [events])
 
   // search
   const filtered = useMemo(() => {
@@ -177,36 +167,31 @@ export default function Home() {
         title="Home"
         description="BlogApp is your calm corner of the internet to write what you feel, save your stories and share them with others."
       />
-
-      {/* top search + quick actions */}
       <div className="flex gap" style={{ alignItems: 'center' }}>
-        <input
-          className="input"
-          placeholder="Search posts…"
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-          style={{ flex: 1 }}
-        />
-        <Link className="btn" to="/posts">Browse</Link>
-        {user ? (
-          <Link className="btn btn-primary" to="/posts/new">Write</Link>
-        ) : (
-          <>
-            <Link className="btn btn-ghost" to="/login">Login</Link>
-            <Link className="btn btn-accent" to="/register">Sign up</Link>
-          </>
-        )}
-        <button className="btn btn-ghost" onClick={toggleMag}>
-          Magazine: {magOn ? 'on' : 'off'}
-        </button>
-      </div>
+  <input
+    className="input"
+    placeholder="Search posts…"
+    value={q}
+    onChange={(e) => setQ(e.target.value)}
+    style={{ flex: 1 }}
+  />
+  <Link className="btn" to="/posts">Browse</Link>
+
+  {user && (
+    <Link className="btn btn-primary" to="/posts/new">Write</Link>
+  )}
+
+  <button className="btn btn-ghost" onClick={toggleMag}>
+    Magazine: {magOn ? 'on' : 'off'}
+  </button>
+</div>
 
       {/* events row (future-only) */}
-      {events.length > 0 && (
+      {upcomingEvents.length > 0 && (
         <div className="card" style={{ marginTop: '.8rem' }}>
           <div className="small" style={{ marginBottom: '.4rem' }}>Upcoming</div>
           <div className="tags" style={{ gap: '.6rem', flexWrap: 'wrap' }}>
-            {events.map((e, i) => (
+            {upcomingEvents.map((e, i) => (
               <a
                 key={i}
                 className="tag"

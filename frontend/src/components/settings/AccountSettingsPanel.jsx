@@ -1,41 +1,14 @@
-// src/components/settings/AccountSettingsPanel.jsx
-import React, { useEffect, useState } from "react";
-import { api } from "../../api";
+import React from "react";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function AccountSettingsPanel() {
-  const [data, setData] = useState({
-    displayName: "",
-    email: "",
-  });
-  const [loading, setLoading] = useState(true);
+  const { user } = useAuth();
 
-  useEffect(() => {
-    let mounted = true;
-    api
-      .get("/me/profile")
-      .then((res) => {
-        if (!mounted || !res?.data) return;
-        setData({
-          displayName: res.data.displayName,
-          email: res.data.email,
-        });
-      })
-      .catch((e) => {
-        console.warn("Account panel: failed to load profile", e);
-      })
-      .finally(() => mounted && setLoading(false));
-
-    return () => {
-      mounted = false;
-    };
-  }, []);
-
-  if (loading) {
+  if (!user) {
     return (
       <section className="settings-panel">
         <h2>Account</h2>
-        <p className="muted">Basic identity & login details.</p>
-        <p>Loading…</p>
+        <p className="muted">Unable to load account details.</p>
       </section>
     );
   }
@@ -44,35 +17,37 @@ export default function AccountSettingsPanel() {
     <section className="settings-panel">
       <h2>Account</h2>
       <p className="muted">
-        Basic identity & login details for your BlogApp account.
+        Login identity and authentication details for your account.
       </p>
+     <div className="settings-card account-card">
+  {/* Email */}
+  <div className="form-row spaced">
+    <label>Email</label>
+    <div className="static-text">{user.email}</div>
+  </div>
 
-      <div className="settings-card">
-        <div className="form-row">
-          <label>Display name</label>
-          <input value={data.displayName} readOnly />
-          <span className="muted small">Change this in the Profile tab.</span>
-        </div>
+  {/* Role */}
+  <div className="form-row spaced">
+    <label>Role</label>
+    <div className="static-text">
+      {user.role === "ADMIN" ? "Administrator" : "User"}
+    </div>
+  </div>
 
-        <div className="form-row">
-          <label>Email</label>
-          <input value={data.email} readOnly />
-          <span className="muted small">
-            Used for login and notifications. Email change is not enabled in
-            this demo.
-          </span>
-        </div>
-
-        <div className="settings-footer">
-          <button
-            type="button"
-            className="btn secondary"
-            onClick={() => alert('To change password, use "Forgot password" on login.')}
-          >
-            Manage password
-          </button>
-        </div>
-      </div>
+  {/* Account actions */}
+  <div className="account-actions">
+    <button
+      className="btn secondary"
+      onClick={() =>
+        alert(
+          'Use "Forgot password" on the login page to reset your password.'
+        )
+      }
+    >
+      Reset password
+    </button>
+  </div>
+</div>    
     </section>
   );
 }

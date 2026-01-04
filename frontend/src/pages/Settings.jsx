@@ -29,7 +29,8 @@ export default function Settings() {
     useSettingsPrefs();
 
   // Get real logged-in user; fall back to Admin if undefined
-  const { user } = useAuth() || {};
+  const { user, logout } = useAuth() || {};
+
   const currentUser = user || { name: "Admin", email: "admin@local" };
   const initialLetter = (currentUser.name || "A").charAt(0).toUpperCase();
 
@@ -71,7 +72,13 @@ export default function Settings() {
         );
 
       case "privacy":
-        return <PrivacySettingsPanel />;
+  return (
+    <PrivacySettingsPanel
+      prefs={prefs}
+      updatePref={updatePref}
+    />
+  );
+
 
       case "help":
         return <HelpFeedbackPanel />;
@@ -121,6 +128,14 @@ export default function Settings() {
                 {s.label}
               </button>
             ))}
+            {/* Logout – reuse existing logic */}
+  <button
+    className="settings-tab-pill"
+    style={{ marginTop: "16px", color: "#ef4444" }}
+    onClick={logout}
+  >
+    Logout
+  </button>
           </nav>
         </aside>
 

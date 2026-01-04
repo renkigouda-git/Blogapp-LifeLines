@@ -35,7 +35,7 @@ export function useSettingsPrefs() {
     let mounted = true;
     (async () => {
       try {
-        const res = await api.get("/me/settings");
+        const res = await api.get("/api/me/settings");
         if (mounted && res?.data) setPrefs((p) => ({ ...p, ...res.data }));
       } catch (e) {
         // backend might not be present — that's okay; we keep local prefs
@@ -62,7 +62,7 @@ export function useSettingsPrefs() {
   const saveToServer = async () => {
     setSaving(true);
     try {
-      await api.put("/me/settings", prefs);
+      await api.put("/api/me/settings", prefs);
       // optimistic — if backend fails, local model still kept
     } catch (e) {
       console.warn("Failed to save settings:", e.message || e);

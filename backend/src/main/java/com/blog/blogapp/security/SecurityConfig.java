@@ -76,7 +76,7 @@ public class SecurityConfig {
                         "/api/series/**",
                         "/api/tags/**",
                         "/api/files/**",
-                        "/api/features/**"
+                        "/api/features/**","/api/events/**"    
                 ).permitAll()
 
                 // admin
