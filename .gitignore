@@ -23,3 +23,5 @@ application-local.properties
 
 # ===== OS =====
 .DS_Store
+# ===== Spring Boot secrets =====
+backend/src/main/resources/application.properties
